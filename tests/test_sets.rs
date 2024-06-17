@@ -48,3 +48,27 @@ fn sets_test() {
         assert!((distance - real_distance).abs() < f32::EPSILON);
     }
 }
+
+/// Boundary testing for set distances, equal sets or one zero set
+#[test]
+fn bounds_test() {
+    let x: Vec<u16> = gen_set();
+    let y: Vec<u16> = Vec::new();
+
+    let mut distance: f32;
+    let mut real_distance: f32;
+
+    distance = jaccard(&x, &x);
+    assert!(distance < f32::EPSILON);
+    distance = jaccard(&x, &y);
+    assert!(distance - 1.0 < f32::EPSILON);
+    distance = jaccard(&y, &y);
+    assert!(distance - 1.0 < f32::EPSILON);
+
+    distance = kulsinski(&x, &x);
+    assert!(distance < f32::EPSILON);
+    distance = kulsinski(&x, &y);
+    assert!(distance - 1.0 < f32::EPSILON);
+    distance = kulsinski(&y, &y);
+    assert!(distance - 1.0 < f32::EPSILON);
+}
